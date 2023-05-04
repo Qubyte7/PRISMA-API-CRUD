@@ -25,6 +25,7 @@ function getAuthors():Array<Author>{
 }
 //SEED
 async function seed(){
+
     await Promise.all(
         getAuthors().map((author)=>{
             return db.author.create({
@@ -35,8 +36,28 @@ async function seed(){
             })
         })
     )
+    const author = await db.author.findFirst({
+        where:{
+            firstName:"innocent",
+        },
+    });
+  if(author){
+    await Promise.all(
+        getBooks().map((book)=>{
+            const {title, isFiction, datePublished} = book;
+            return db.book.create({
+                data:{
+                    title,
+                    isFiction,
+                    datePublished,
+                    authorId: author.id,
+                },
+            })
+        })
+    )
+  }
 }
-
+seed()
 
 
 
