@@ -14,17 +14,4 @@ db=global.__db;
 //it update to our database
 
 
-
-
-
 export{db};
-
-
-
-
-
-
-
-
-
-

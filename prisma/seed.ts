@@ -23,19 +23,38 @@ function getAuthors():Array<Author>{
         lastname:"Hitesh",
     }]
 }
+
+function getBooks():Array<Book>{
+    return[{
+        title:"Vampire System",
+        isFiction:false,
+        datePublished:new Date(),
+    },{
+        title:"Homo Deus",
+        isFiction:false,
+        datePublished: new Date(),
+    },{
+        title:"The Ugly Duckling",
+        isFiction:true,
+        datePublished:new Date(),
+    }]
+}
+
+
+
 //SEED
 async function seed(){
 
-    await Promise.all(
+    await Promise.all(//the promise.all ===>will wait for other promises to be resolved so it may be also to be resolved
         getAuthors().map((author)=>{
             return db.author.create({
                 data:{
                     firstName:author.firstname,
                     lastName:author.lastname
                 }
-            })
-        })
-    )
+            });
+        }),)
+        
     const author = await db.author.findFirst({
         where:{
             firstName:"innocent",
@@ -58,25 +77,5 @@ async function seed(){
   }
 }
 seed()
-
-
-
-
-function getBooks():Array<Book>{
-    return[{
-        title:"Vampire System",
-        isFiction:false,
-        datePublished:new Date(),
-    },{
-        title:"Homo Deus",
-        isFiction:false,
-        datePublished: new Date(),
-    },{
-        title:"The Ugly Duckling",
-        isFiction:true,
-        datePublished:new Date(),
-    }]
-}
-
 
 
